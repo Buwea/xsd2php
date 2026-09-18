@@ -64,8 +64,8 @@ abstract class AbstractConverter
         if (isset($this->aliasCache[$cid])) {
             return $this->aliasCache[$cid];
         }
-        if (isset($this->typeAliases[$schema->getTargetNamespace()][$type->getName()])) {
-            return $this->aliasCache[$cid] = call_user_func($this->typeAliases[$schema->getTargetNamespace()][$type->getName()], $type);
+        if (isset($this->typeAliases[$schema->getTargetNamespace() ?? ''][$type->getName() ?? ''])) {
+            return $this->aliasCache[$cid] = call_user_func($this->typeAliases[$schema->getTargetNamespace() ?? ''][$type->getName() ?? ''], $type);
         }
     }
 

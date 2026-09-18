@@ -5,14 +5,14 @@ namespace GoetasWebservices\Xsd\XsdToPhp\DependencyInjection;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\Extension;
-use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
+use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 
 class Xsd2PhpExtension extends Extension
 {
-    public function load(array $configs, ContainerBuilder $container)
+    public function load(array $configs, ContainerBuilder $container): void
     {
-        $xml = new XmlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
-        $xml->load('services.xml');
+        $yaml = new YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
+        $yaml->load('services.yaml');
 
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);

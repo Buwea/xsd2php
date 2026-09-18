@@ -197,11 +197,11 @@ class YamlConverter extends AbstractConverter
     {
         $schema = $item->getSchema();
 
-        if (!isset($this->namespaces[$schema->getTargetNamespace()])) {
+        if (!isset($this->namespaces[$schema->getTargetNamespace() ?? ''])) {
             throw new Exception(sprintf("Can't find a PHP namespace to '%s' namespace", $schema->getTargetNamespace()));
         }
 
-        return $this->namespaces[$schema->getTargetNamespace()];
+        return $this->namespaces[$schema->getTargetNamespace() ?? ''];
     }
 
     private function findPHPName(Type $type)

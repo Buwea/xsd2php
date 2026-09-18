@@ -3,14 +3,11 @@
 namespace GoetasWebservices\Xsd\XsdToPhp\Command;
 
 use Symfony\Component\Config\FileLocator;
-use Symfony\Component\Config\Loader\DelegatingLoader;
-use Symfony\Component\Config\Loader\LoaderResolver;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 
 class Convert extends Command
@@ -29,7 +26,7 @@ class Convert extends Command
     /**
      * @see Console\Command\Command
      */
-    protected function configure()
+    protected function configure(): void
     {
         $this->setName('convert');
         $this->setDescription('Convert a XSD file into PHP classes and JMS serializer metadata files');
@@ -72,10 +69,7 @@ class Convert extends Command
     {
         $locator = new FileLocator('.');
         $yaml = new YamlFileLoader($this->container, $locator);
-        $xml = new XmlFileLoader($this->container, $locator);
-
-        $delegatingLoader = new DelegatingLoader(new LoaderResolver([$yaml, $xml]));
-        $delegatingLoader->load($configFile);
+        $yaml->load($configFile);
 
         $this->container->compile();
     }
