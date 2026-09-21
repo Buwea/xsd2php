@@ -208,10 +208,10 @@ class PhpConverter extends AbstractConverter
             $class->setName($this->getNamingStrategy()->getItemName($element));
             $class->setDoc($element->getDoc());
 
-            if (!isset($this->namespaces[$schema->getTargetNamespace()])) {
+            if (!isset($this->namespaces[$schema->getTargetNamespace() ?? ''])) {
                 throw new Exception(sprintf("Can't find a PHP namespace to '%s' namespace", $schema->getTargetNamespace()));
             }
-            $class->setNamespace($this->namespaces[$schema->getTargetNamespace()]);
+            $class->setNamespace($this->namespaces[$schema->getTargetNamespace() ?? '']);
 
             $type = $element->getType();
             if (!$type->getName()) {
@@ -257,10 +257,10 @@ class PhpConverter extends AbstractConverter
 
         $name = $this->getNamingStrategy()->getTypeName($type);
 
-        if (!isset($this->namespaces[$schema->getTargetNamespace()])) {
+        if (!isset($this->namespaces[$schema->getTargetNamespace() ?? ''])) {
             throw new Exception(sprintf("Can't find a PHP namespace to '%s' namespace", $schema->getTargetNamespace()));
         }
-        $ns = $this->namespaces[$schema->getTargetNamespace()];
+        $ns = $this->namespaces[$schema->getTargetNamespace() ?? ''];
 
         return [
             $name,

@@ -22,5 +22,11 @@ $container->set('logger', new \Symfony\Component\Console\Logger\ConsoleLogger($o
 error_reporting(error_reporting() & ~E_NOTICE);
 $cli = new Application('Convert XSD to PHP classes Command Line Interface', "2.0");
 $cli->setCatchExceptions(true);
-$cli->add(new Convert($container));
+$command = new Convert($container);
+// Application::add() was replaced by addCommand() in Symfony 7.4 and removed in 8.0
+if (method_exists($cli, 'addCommand')) {
+    $cli->addCommand($command);
+} else {
+    $cli->add($command);
+}
 $cli->run(null, $output);
